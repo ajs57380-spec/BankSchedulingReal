@@ -1,5 +1,6 @@
 import { Link, Outlet, useLocation } from 'react-router-dom';
-import { Calendar, Home, Plus } from 'lucide-react';
+import { Calendar, Home, Plus, LogOut } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 
 const navContainer = "bg-white shadow-md";
 
@@ -19,6 +20,7 @@ const mainContainer = "min-h-[calc(100vh-4rem)] bg-gray-50";
 
 function AppLayout() {
   const location = useLocation();
+  const { signOut, user } = useAuth();
 
   const isActive = (path: string) => {
     return location.pathname === path;
@@ -54,6 +56,17 @@ function AppLayout() {
                 <Plus size={20} />
                 <span className="hidden sm:inline">Book New</span>
               </Link>
+              <div className="flex items-center gap-3 pl-4 border-l border-gray-200">
+                <span className="hidden sm:inline text-xs text-gray-500 truncate max-w-[120px]">{user?.email}</span>
+                <button
+                  onClick={signOut}
+                  className="flex items-center gap-1.5 text-gray-600 hover:text-red-600 transition-colors font-medium text-sm"
+                  title="Sign out"
+                >
+                  <LogOut size={18} />
+                  <span className="hidden sm:inline">Sign Out</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
